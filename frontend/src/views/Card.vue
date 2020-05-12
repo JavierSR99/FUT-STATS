@@ -1,0 +1,198 @@
+<template>
+  <v-container v-if="card != null">
+    <v-row>
+      <v-col cols="12" class="text-center">
+        <h1>{{card.infoplayer.nombre}} {{card.infoplayer.apellidos}}</h1>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col xs="12" md="5">
+        <img :src="rutaImg+card.infocard.img_carta" :alt="card.infoplayer.nombre" width="400px" />
+        <v-row>
+          <v-icon>fas fa-thumbs-up</v-icon> <v-icon>fas fa-thumbs-down</v-icon>
+        </v-row>
+      </v-col>
+      <v-col xs="12" md="7">
+        <v-row>Posición: {{card.other.posicion}} | País: {{card.other.pais}} | Calidad: {{card.other.calidad}}</v-row>
+        <v-row>
+          <v-simple-table>
+              <thead>
+                <tr>
+                  <th class="text-left">Precio PS4</th>
+                  <th class="text-left">Precio XBOX</th>
+                  <th class="text-left">Precio PC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    {{card.infocard.precio_ps}}
+                    <i class="fas fa-coins"></i>
+                  </td>
+                  <td>
+                    {{card.infocard.precio_xbox}}
+                    <i class="fas fa-coins"></i>
+                  </td>
+                  <td>
+                    {{card.infocard.precio_pc}}
+                    <i class="fas fa-coins"></i>
+                  </td>
+                </tr>
+              </tbody>
+          </v-simple-table>
+        </v-row>
+        <v-row>
+            <v-col v-for="(item, index) of card.stats" :key="index" cols="12" class="m-2">
+              {{index}} - {{item}}
+              <v-progress-linear :value="item"></v-progress-linear>
+            </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <h1>Comments!</h1>
+      </v-col>
+      <v-col cols="12">
+        <v-alert type="warning" v-if="error !== null">{{error}}</v-alert>
+        <v-alert type="success" v-if="mensaje != null && tiempo == true">{{mensaje}}</v-alert>
+        <v-form @submit.prevent="insertarComment">
+          <v-text-field
+        v-model="$v.comentario.$model"
+        color="verdesito"
+        label="Write your comment here!"
+        :error-messages="commentErrors"
+        required
+      ></v-text-field>
+        </v-form >
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" v-for="(item, index) in comments" :key="index">
+        <v-card
+            color="rgba(12, 13, 14, 0.5)"
+            dark
+          >
+
+          <v-avatar><img :src="'http://localhost:80/FUT%20STATS/backend/img/perfil/'+item.IMG" /></v-avatar>
+            <v-card-title class="headline">{{item.CONTENT}}</v-card-title>
+            <v-card-subtitle>{{item.USER}} - {{item.DATE}}</v-card-subtitle>
+          </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+
+<script>
+import { mapActions, mapState, mapMutations } from "vuex";
+import {
+  required,
+  minLength,
+  maxLength,
+} from "vuelidate/lib/validators";
+import moment from 'moment'
+
+export default {
+  name: "Card",
+  data() {
+    return {
+      id: this.$route.params.id,
+      rutaImg: "http://localhost:80/FUT%20STATS/backend/img/cartas/",
+      headers: [
+        {
+          text: "Precio PS4",
+          align: "center",
+          value: "ps"
+        },
+        { text: "Precio XBOX ONE", align: "center", value: "xbox" },
+        { text: "Precio PC", align: "center", value: "pc" }
+      ],
+      desserts: [
+        {
+          ps: "jaja",
+          xbox: "hola",
+          pc: "hola"
+        }
+      ],
+      comentario : '',
+      error : null,
+      fecha : Date.now(),
+      mensaje : null,
+      tiempo : false
+    };
+  },
+  methods: {
+    ...mapMutations(['setComments', 'setCard', 'deleteCard', 'addComment']),
+    insertarComment () {
+      if (this.$v.comentario.required == true && this.$v.comentario.minLength == true 
+      && this.$v.comentario.maxLength == true) {
+        this.error = null;
+        if (localStorage.getItem('username')) {
+          moment.locale('en');
+          let date = moment(this.fecha).format('MMMM Do YYYY, h:mm a');
+          let data = new FormData();
+          data.append('func', 4);
+          data.append('content', this.comentario);
+          data.append('date', date);
+          data.append('cod_card', this.id );
+          data.append('cod_user', localStorage.getItem('userId'));
+          
+
+          this.axios.post(this.axios.default.baseURL, data)
+          .then(res => {
+            if (res.data.insercion == 'correcta') {
+              console.log(res.data);
+              this.addComment({DATE : date, CONTENT : this.comentario, USER : localStorage.getItem('username'), IMG : this.profilePic});
+              this.comentario = '';
+              this.mensaje = res.data.mensaje;
+              this.tiempo = true;
+              setTimeout(() => {
+                this.tiempo = false;
+                this.mensaje = null;
+              },3000);
+            }
+          })
+        } else {
+          this.error = 'Por favor, inicia sesión para poder introducir comentarios';
+        }
+      } else {
+        this.error = 'Por favor, introduce un comentario de entre 10 y 255 carácteres';
+      }
+    },
+    async getCardData() {
+      let data = new FormData();
+      data.append('func', 11);
+      data.append('player', this.id);
+      await this.axios.post(this.axios.default.baseURL, data)
+        .then(res => {
+          this.setCard(res.data);
+          this.setComments(res.data.comments);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  },
+  created() {
+    this.getCardData(this.id);
+  },
+  destroyed () {
+    this.deleteCard();
+  },
+  computed: {
+    ...mapState(["card", "comments", "profilePic"]),
+    commentErrors() {
+      const errors = [];
+      if (!this.$v.comentario.$dirty) return errors;
+      !this.$v.comentario.minLength && errors.push("Mínimo 10 carácteres.");
+      !this.$v.comentario.maxLength && errors.push("Máximo 255 carácteres.");
+      return errors;
+    }
+  },
+  validations : {
+    comentario : {required, minLength: minLength(10), maxLength: maxLength(255)}
+  }
+};
+</script>
+
