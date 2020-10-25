@@ -224,4 +224,38 @@ switch ($func) {
         }
     break;
 
+    // case 19, se devuelven "me gusta" y "no me gusta" de una carta
+    case 19:
+        if (isset($cod_card)) {
+            $bbdd = new BBDD();
+        echo json_encode($bbdd->likes($cod_card));
+        } else {
+            echo json_encode(array('mensaje' => 'ERROR'));
+        }
+    break;
+
+    // case 20, se llama para sacar la valoración actual de un usuario a una carta
+    case 20:
+        if (isset($cod_card) && $cod_user) {
+            $bbdd = new BBDD();
+            echo json_encode(array('rate' => $bbdd->getRating($cod_user, $cod_card)));
+        } else {
+            echo json_encode(array('mensaje' => 'ERROR'));
+        }
+    break;
+
+    // case 21, el usuario desea borrar uno de sus comentarios
+    case 21:
+        if (isset($_POST['cod_comment'])) {
+            $bbdd = new BBDD ();
+            $delete = $bbdd->deleteComment($_POST['cod_comment']);
+            if ($delete == true) {
+                echo json_encode(array('result' => 'borrado'));
+            } else {
+                echo json_encode(array('result' => 'error'));
+            }
+        } else {
+            echo json_encode(array('mensaje' => 'ERROR'));
+        }
+
 }

@@ -242,12 +242,15 @@ class BBDD
         return $result;
     }
 
+    /**
+     * Borra un comentario cuyo código se ha pasado como parámetro
+     */
     public function deleteComment ($cod_comment) {
         $result = false;
 
         $sql = $this->bbdd->query("DELETE FROM comentarios WHERE cod_comentario=$cod_comment");
 
-        if ($this->bbdd->affected_rows > 0) {
+        if ($this->bbdd->affected_rows == -1) {
             $result = true;
         }
         return $result;
@@ -801,12 +804,12 @@ class BBDD
     public function selectComments ($cod_card, $limit) {
         $result = null;
 
-        $sql = $this->bbdd->query("SELECT c.contenido, c.fecha, u.foto_perfil, u.username
+        $sql = $this->bbdd->query("SELECT c.contenido, c.fecha, c.cod_comentario, u.foto_perfil, u.username
         FROM comentarios c JOIN usuarios u ON u.cod_usuario=c.cod_usuario WHERE cod_carta = $cod_card
         ORDER BY c.cod_comentario DESC LIMIT $limit");
 
         foreach ($sql as $data) { $result[] = array('DATE' => $data['fecha'], 'CONTENT' => $data['contenido'],
-            'IMG' => $data['foto_perfil'], 'USER' => $data['username']); }
+            'IMG' => $data['foto_perfil'], 'USER' => $data['username'], 'COD' => $data['cod_comentario']); }
 
         return $result;
     }

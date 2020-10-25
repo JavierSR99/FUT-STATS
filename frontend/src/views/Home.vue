@@ -1,7 +1,11 @@
+//html de la página de bienvenida
 <template>
   <v-container>
     <v-row class="home">
       <h1>Welcome to FUT STATS!</h1>
+    </v-row>
+    <v-row>
+      <v-img src="../assets/prueba logo.png" lazy-src></v-img>
     </v-row>
     <v-row>
       <v-col md="7" xs="12">
@@ -35,6 +39,8 @@ export default {
   name: "Home",
   data() {
     return {
+      /* array con las imágenes del carrousel, si se añade el nombre una imagen que exista en el directorio correspondiente, aparecerá
+      automáticamente en el carrousel */
       carousel: [
         {
           foto: "carro1.jpg"
