@@ -17,8 +17,8 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer> <!-- separador entre enlaces y el icono-->
-
-      
+ 
+      <!-- los iconos funcionan con etiqueta especial, al estar instalados como un componente -->
        <font-awesome-icon :icon="['fas', 'futbol']" size="lg" />
 
     </v-app-bar>
