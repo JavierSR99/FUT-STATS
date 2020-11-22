@@ -2,7 +2,9 @@
   <div>
   <!-- la app bar contiene los enlaces a las diferentes vistas de la aplicación -->
     <v-app-bar color="verdesito" dense dark>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer">
+        <font-awesome-icon :icon="['fas', 'bars']" size="2x"  />
+      </v-app-bar-nav-icon>
 
       <v-toolbar-title class="px-5">
         <router-link id="enlace" :to="{name : 'Home'}">Home</router-link>
@@ -37,7 +39,10 @@
           </v-list-item-content>
 
           <v-list-item-avatar @click="drawer = !drawer">
-            <v-icon class="icono">fas fa-angle-double-left</v-icon>
+            <font-awesome-icon :icon="['fas', 'angle-double-left']" size="lg" class="icono" />
+
+            
+            <!-- <v-icon class="icono">fas fa-angle-double-left</v-icon> -->
           </v-list-item-avatar>
         </v-list-item>
 

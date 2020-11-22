@@ -15,23 +15,34 @@
         </v-row>
         <v-row>
           <v-col>
+            <font-awesome-icon :icon="['fas', 'thumbs-up']" size="lg" class="dedo" 
+                v-if="valoracion == false" @click="sendRate(0)" />
+
+            <font-awesome-icon :icon="['fas', 'thumbs-up']" size="lg" class="dedo" color="blue" 
+                v-if="valoracion == true" @click="sendRate(0)" />
+            <!--
             <v-icon
               class="dedo"
               v-if="valoracion == false"
               @click="sendRate(0)"
-            >fas fa-thumbs-up</v-icon>
+            >fas fa-thumbs-up</v-icon> 
             <v-icon
               class="dedo"
               color="blue"
               v-if="valoracion == true"
               @click="sendRate(0)"
-            >fas fa-thumbs-up</v-icon>
+            >fas fa-thumbs-up</v-icon> -->
             {{mg}}
           </v-col>
 
           <v-col>
-            <v-icon class="dedo" v-if="valoracionN == false" @click="sendRate(1)">fas fa-thumbs-down</v-icon>
-            <v-icon class="dedo" color="blue" v-if="valoracionN == true" @click="sendRate(1)">fas fa-thumbs-down</v-icon>
+            <font-awesome-icon :icon="['fas', 'thumbs-down']" size="lg" class="dedo" 
+                v-if="valoracionN == false" @click="sendRate(1)" />
+
+            <font-awesome-icon :icon="['fas', 'thumbs-down']" size="lg" class="dedo" color="blue" 
+                v-if="valoracionN == true" @click="sendRate(1)" />
+            <!--<v-icon class="dedo" v-if="valoracionN == false" @click="sendRate(1)">fas fa-thumbs-down</v-icon>
+            <v-icon class="dedo" color="blue" v-if="valoracionN == true" @click="sendRate(1)">fas fa-thumbs-down</v-icon> -->
             {{nmg}}
           </v-col>
         </v-row>
