@@ -169,7 +169,7 @@ export default {
         this.email = '';
         this.password = '';
         this.repeatPassword = '';
-        this.error = '';
+        this.error = null;
     }
   }
 };

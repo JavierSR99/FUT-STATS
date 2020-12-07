@@ -22,10 +22,10 @@ axios.default.baseURL = 'http://localhost:/FUT STATS/backend/api.php';
 
 // importamos fontawesome para iconos
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFutbol, faThumbsUp, faThumbsDown, faAngleDoubleLeft, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faFutbol, faThumbsUp, faThumbsDown, faAngleDoubleLeft, faBars, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faFutbol, faThumbsUp, faThumbsDown, faAngleDoubleLeft, faBars)
+library.add(faFutbol, faThumbsUp, faThumbsDown, faAngleDoubleLeft, faBars, faArrowLeft, faArrowRight)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

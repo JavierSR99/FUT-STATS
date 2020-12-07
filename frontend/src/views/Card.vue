@@ -20,18 +20,6 @@
 
             <font-awesome-icon :icon="['fas', 'thumbs-up']" size="lg" class="dedo" color="blue" 
                 v-if="valoracion == true" @click="sendRate(0)" />
-            <!--
-            <v-icon
-              class="dedo"
-              v-if="valoracion == false"
-              @click="sendRate(0)"
-            >fas fa-thumbs-up</v-icon> 
-            <v-icon
-              class="dedo"
-              color="blue"
-              v-if="valoracion == true"
-              @click="sendRate(0)"
-            >fas fa-thumbs-up</v-icon> -->
             {{mg}}
           </v-col>
 
@@ -302,7 +290,7 @@ export default {
       }
     },
     /**
-     * elimina un comentario de la base de datos (solo podrá llamar a esta función el usuario creador de dicha comentario)
+     * elimina un comentario de la base de datos (solo podrá llamar a esta función el usuario creador de dicho comentario)
      */
     eliminar (cod) {
       let datos = new FormData ();
@@ -311,13 +299,14 @@ export default {
 
       this.axios.post(this.axios.default.baseURL, datos)
       .then( res => {
+        console.log(res)
         if (res.data.result == 'error') {
           console.log('true');
           let borrado = this.comments.findIndex(item => item.COD == cod);
           this.comments.splice(borrado, 1);
         } else {
           console.log('false');
-        }
+        } 
       })
     }
   },

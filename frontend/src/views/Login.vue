@@ -47,11 +47,16 @@ export default {
   },
   methods: {
       ...mapMutations(["setUser", "setProfilePic"]),
+    
+    /**
+     * limpia los campos del formulario
+     */
     reset() {
-      this.username = "";
-      this.clave = "";
-      error = "";
+      this.email = "";
+      this.password = "";
+      this.error = null;
     },
+
     logueo() {
       if (
         this.$v.email.required &&

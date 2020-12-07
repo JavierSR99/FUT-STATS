@@ -40,9 +40,6 @@
 
           <v-list-item-avatar @click="drawer = !drawer">
             <font-awesome-icon :icon="['fas', 'angle-double-left']" size="lg" class="icono" />
-
-            
-            <!-- <v-icon class="icono">fas fa-angle-double-left</v-icon> -->
           </v-list-item-avatar>
         </v-list-item>
 
@@ -73,7 +70,7 @@
           </v-list-item-content>
 
           <v-list-item-avatar @click="drawer = !drawer">
-            <v-icon class="icono">fas fa-angle-double-left</v-icon>
+            <font-awesome-icon :icon="['fas', 'angle-double-left']" size="lg" class="icono" />
           </v-list-item-avatar>
         </v-list-item>
 
@@ -139,7 +136,7 @@ export default {
      */
     cerrarSesion() {
       this.setUser({username : 'Visitante', email : null}); //el username de vuex pasa a "visitante"
-      this.$router.push({ name: 'Register' }); //el usuario vuelve a la vista de "registro"
+      this.$router.push({ name: 'Home' }); //el usuario vuelve a la vista de "inicio"
 
       //eliminamos la sesión del localStorage
       localStorage.removeItem('username');
@@ -172,6 +169,6 @@ export default {
 /* hover al pasar por iconos del menú lateral izquierdo */
 .icono:hover {
   cursor: pointer;
-  color: blue;
+  color: #20c997;
 }
 </style>

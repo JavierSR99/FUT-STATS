@@ -1,4 +1,3 @@
-//html de la página de bienvenida
 <template>
   <v-container>
     <v-row class="home">
