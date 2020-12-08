@@ -150,7 +150,10 @@ export default {
   },
   methods: {
     ...mapMutations(["setComments", "setCard", "deleteCard", "addComment"]),
-    /* realiza la lógica necesaria para enviar o no enviar un comentario al servidor que se desea introducir */
+
+    /**
+     *  realiza la lógica necesaria para enviar o no enviar un comentario al servidor que se desea introducir
+     **/ 
     insertarComment() {
       //si se cumplen los requisitos para insertar el comentario...
       if (
@@ -160,6 +163,7 @@ export default {
       ) {
         this.error = null;
         if (localStorage.getItem("username")) {
+          //formateamos fecha y creamos datos para mandar al servidor
           moment.locale("en");
           let date = moment(this.fecha).format("MMMM Do YYYY, h:mm a");
           let data = new FormData();
@@ -171,13 +175,17 @@ export default {
 
           this.axios.post(this.axios.default.baseURL, data).then(res => {
             if (res.data.insercion == "correcta") {
-              console.log(res.data);
+              
               this.addComment({
+                COD : res.data.cod_c,
                 DATE: date,
                 CONTENT: this.comentario,
                 USER: localStorage.getItem("username"),
                 IMG: this.profilePic
               });
+
+              console.log(this.comments);
+
               this.comentario = "";
               this.mensaje = res.data.mensaje;
               this.tiempo = true;
@@ -187,6 +195,7 @@ export default {
               }, 3000);
             }
           });
+
         } else {
           this.error =
             "Por favor, inicia sesión para poder introducir comentarios";
@@ -203,6 +212,7 @@ export default {
       await this.axios
         .post(this.axios.default.baseURL, data)
         .then(res => {
+          
           this.setCard(res.data);
           this.setComments(res.data.comments);
         })
@@ -299,9 +309,9 @@ export default {
 
       this.axios.post(this.axios.default.baseURL, datos)
       .then( res => {
-        console.log(res)
+        
         if (res.data.result == 'error') {
-          console.log('true');
+          
           let borrado = this.comments.findIndex(item => item.COD == cod);
           this.comments.splice(borrado, 1);
         } else {

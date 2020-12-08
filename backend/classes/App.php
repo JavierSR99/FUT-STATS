@@ -205,10 +205,13 @@ class App
             $bbdd = new BBDD();
             $inserted = $bbdd->newComment($comment);
 
+            
+
             //si se ha insertado bien...
             if ($inserted == true) {
+                $cod_c = $bbdd->findLastCommentInserted($comment);
                 //mensaje afirmativo
-                $result = array('insercion' => 'correcta', 'mensaje' => 'Comentario agregado correctamente');
+                $result = array('insercion' => 'correcta', 'mensaje' => 'Comentario agregado correctamente', 'cod_c' => $cod_c);
             } else {
                 $result = array('insercion' => 'error', 'mensaje' => 'Error al insertar comentario');
             }

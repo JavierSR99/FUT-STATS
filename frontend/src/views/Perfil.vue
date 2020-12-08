@@ -17,7 +17,7 @@
       
       <v-col cols="12">
         <v-form @reset="resetData" @submit.prevent="cambiarFotoDePerfil">
-          <v-file-input label="File input" color="verdesito" v-model="fotodeperfil"
+          <v-file-input label="Selecciona una imagen..." color="verdesito" v-model="fotodeperfil"
            filled prepend-icon="fas fa-camera-retro"></v-file-input>
           <v-btn small class="mr-5" type="submit">Cambiar imagen</v-btn>
         </v-form>
@@ -100,6 +100,7 @@ export default {
   methods: {
     ...mapMutations(["setUser", "setProfilePic"]),
     ...mapActions(["cargarImgPerfil"]),
+
     resetData() {
       this.user = "";
       this.newusername = "";
@@ -157,6 +158,7 @@ export default {
         this.axios.post(this.axios.default.baseURL, datos)
         .then(res => {
           if (res.data.cambio == 'correcto') {
+            this.cargarImgPerfil(localStorage.getItem('userId'))
             this.setProfilePic(localStorage.getItem('userId')+'.png');
             this.tiempo = true;
             this.mensaje = res.data.mensaje;

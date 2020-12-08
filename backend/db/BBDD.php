@@ -242,6 +242,24 @@ class BBDD
         return $result;
     }
 
+    public function findLastCommentInserted (Comentario $comment) {
+
+        $cod = null;
+
+        $codUser = $comment->getCodUser();
+        $codCard = $comment->getCodPlayer();
+        $content = $comment->getContent();
+        $date = $comment->getCDate();
+
+        $sql = $this->bbdd->query("SELECT cod_comentario FROM comentarios WHERE cod_usuario = '$codUser' AND cod_carta = '$codCard' AND 
+        contenido = '$content' AND fecha = '$date'");
+
+        foreach ($sql as $data) { $cod = $data['cod_comentario']; }
+
+        return $cod;
+
+    }
+
     /**
      * Borra un comentario cuyo código se ha pasado como parámetro
      */
