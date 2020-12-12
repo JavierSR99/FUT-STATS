@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <span class="bg"></span>
     <v-row>
       <v-form @submit.prevent="buscarJugador">
         <v-text-field v-model="pname" v-on:keyup="buscarJugador" label="Busca un jugador..."></v-text-field>
@@ -72,4 +73,15 @@ export default {
   color: black;
   font-size: 1rem;
 }
+
+.bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    background: url( '../assets/prueba logo.png') no-repeat center center;
+    
+    opacity: 0.5;
+  }
+
 </style>

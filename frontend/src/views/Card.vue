@@ -365,5 +365,6 @@ export default {
 .eliminar {
   color: red;
 }
+
 </style>
 
