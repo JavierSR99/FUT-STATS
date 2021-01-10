@@ -80,7 +80,6 @@ export default {
     position: absolute;
     left: 0;
     background: url( '../assets/prueba logo.png') no-repeat center center;
-    
     opacity: 0.5;
   }
 

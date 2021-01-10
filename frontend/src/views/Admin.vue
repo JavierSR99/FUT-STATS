@@ -66,7 +66,7 @@
                 :error-messages="paisesErrors"
               ></v-select>
               <v-btn big color="accent" dark class="mx-2" type="submit">Añadir liga</v-btn>
-              <v-btn big color="danger" dark class="mx-2" type="reset" @click="resetear">Resetar</v-btn>
+              <v-btn big color="danger" dark class="mx-2" type="reset" @click="resetear">Resetear</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -104,7 +104,7 @@
                 v-model="$v.liga.$model"
               ></v-select>
               <v-btn big color="accent" dark class="mx-2" type="submit">Añadir equipo</v-btn>
-              <v-btn big color="danger" dark class="mx-2" type="reset" @click="resetear">Resetar</v-btn>
+              <v-btn big color="danger" dark class="mx-2" type="reset" @click="resetear">Resetear</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -163,7 +163,7 @@
                 prepend-icon="fas fa-camera-retro"
               ></v-file-input>
               <v-btn big color="accent" dark class="mx-2" type="submit">Añadir jugador</v-btn>
-              <v-btn big color="danger" dark class="mx-2" type="reset" @click="resetear">Resetar</v-btn>
+              <v-btn big color="danger" dark class="mx-2" type="reset" @click="resetear">Resetear</v-btn>
             </v-col>
           </v-row>
         </v-form>
