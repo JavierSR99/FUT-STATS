@@ -257,5 +257,9 @@ switch ($func) {
         } else {
             echo json_encode(array('mensaje' => 'ERROR'));
         }
+    break;
 
+        default:
+            echo json_encode(array('mensaje' => 'ERROR! LA INFORMACIÓN RECIBIDA ES ERRÓNEA.'));
+        break;
 }

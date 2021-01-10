@@ -107,6 +107,9 @@ export default {
       this.fotodeperfil = null;
     },
     cambiarUsername() {
+      this.error = null;
+      this.mensaje = null;
+
       if (
         this.$v.user.required &&
         this.$v.newusername.required &&
@@ -123,6 +126,7 @@ export default {
               this.tiempo = false;
             }, 4000);
           } else {
+            this.username = this.newusername;
             this.setUser({
               username: this.newusername,
               email: localStorage.getItem("email")
